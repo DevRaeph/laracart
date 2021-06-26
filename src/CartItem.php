@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use LukePOLO\LaraCart\Contracts\CouponContract;
 use LukePOLO\LaraCart\Exceptions\ModelNotFound;
 use LukePOLO\LaraCart\Traits\CartOptionsMagicMethodsTrait;
+use Money\Money;
 
 /**
  * Class CartItem.
@@ -348,7 +349,9 @@ class CartItem
             $itemCount = 0;
             $totalTax = 0;
             while ($itemCount < $this->qty) {
-                $totalTax += round($this->price * $this->tax, 2);
+                $money = Money::EUR($this->price);
+                $taxAlt = $money->multiply($this->tax,MONEY::ROUND_HALF_POSITIVE_INFINITY);
+                $totalTax += $taxAlt->getAmount();
                 $itemCount++;
             }
 
