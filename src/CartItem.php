@@ -349,9 +349,7 @@ class CartItem
             $itemCount = 0;
             $totalTax = 0;
             while ($itemCount < $this->qty) {
-                $money = Money::EUR($this->price);
-                $taxAlt = $money->multiply($this->tax,MONEY::ROUND_HALF_POSITIVE_INFINITY);
-                $totalTax += $taxAlt->getAmount();
+                $totalTax += round(($this->price * (1+($this->tax/100))),2);
                 $itemCount++;
             }
 
