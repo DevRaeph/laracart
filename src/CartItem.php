@@ -62,8 +62,7 @@ class CartItem
         $this->name = $name;
         $this->taxable = $taxable;
         $this->lineItem = $lineItem;
-        $this->price = (config('laracart.prices_in_cents', false) === true ? intval($price) : floatval($price));
-        $this->tax = config('laracart.tax');
+        $this->price = $price;
         $this->itemModel = config('laracart.item_model', null);
         $this->itemModelRelations = config('laracart.item_model_relations', []);
         $this->exclude_from_hash = config('laracart.exclude_from_hash', []);
@@ -71,6 +70,8 @@ class CartItem
         foreach ($options as $option => $value) {
             $this->$option = $value;
         }
+        
+        $this->tax = $this->options["tax"] ?? config('laracart.tax');
     }
 
     /**
@@ -85,8 +86,9 @@ class CartItem
         if ($this->lineItem === false) {
             $this->itemHash = null;
 
-            $cartItemArray = (array) $this;
+            $cartItemArray = (array) clone $this;
 
+            unset($cartItemArray['discounted']);
             unset($cartItemArray['options']['qty']);
 
             foreach ($this->exclude_from_hash as $option) {
