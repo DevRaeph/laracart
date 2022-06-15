@@ -10,19 +10,23 @@
   "homepage": "https://github.com/lukepolo/laracart",
   "license": "MIT",
   "authors": [
-    {
-      "name": "Luke Policinski",
-      "email": "Luke@LukePOLO.com",
-      "homepage": "http://LukePOLO.com"
-    }
+      {
+          "name": "Luke Policinski",
+          "email": "Luke@LukePOLO.com",
+          "homepage": "http://LukePOLO.com"
+      },
+      {
+          "name": "DevRaeph",
+          "email": "me@devraeph.com",
+          "homepage": "https://devraeph.com"
+      }
   ],
   "require": {
-    "php": "~7.2 || ~7.3 || ~7.4 || ~8.0",
-    "ext-intl" : "*",
-    "illuminate/support": "~5.5.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-    "illuminate/session": "~5.5.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-    "illuminate/events": "~5.5.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
-    "moneyphp/money": "^3.3"
+    "php": "~7.3 || ~7.4 || ~8.0",
+    "ext-intl": "*",
+    "illuminate/support": "~5.5.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0|^9.0",
+    "illuminate/session": "~5.5.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0|^9.0",
+    "illuminate/events": "~5.5.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0|^9.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.5",

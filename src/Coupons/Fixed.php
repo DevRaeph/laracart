@@ -35,47 +35,22 @@ class Fixed implements CouponContract
     /**
      * Gets the discount amount.
      *
-     * @param $throwErrors boolean this allows us to capture errors in our code if we wish,
-     * that way we can spit out why the coupon has failed
-     *
      * @return string
      */
-    public function discount($throwErrors = false)
+    public function discount($price)
     {
-        $subTotal = app(LaraCart::SERVICE)->subTotal(false);
+        if ($this->canApply()) {
+            $discount = $this->value - $this->discounted;
+            if ($discount > $price) {
+                return $price;
+            }
 
-        if (config('laracart.tax_item_before_discount')) {
-            $subTotal = $subTotal + app(LaraCart::SERVICE)->taxTotal(false, true, true, false);
+            return $discount;
         }
 
-        if (config('laracart.discountOnFees', false)) {
-            $subTotal = $subTotal + app(LaraCart::SERVICE)->feeTotals(false);
-        }
-
-        $total = $subTotal - $this->value;
-
-        if ($total < 0) {
-            return $subTotal;
-        }
-
-        return $this->value;
+        return 0;
     }
 
-    /**
-     * If an item is supplied it will get its discount value.
-     *
-     * @param CartItem $item
-     *
-     * @return float
-     */
-    public function forItem(CartItem $item)
-    {
-        if (config('laracart.tax_item_before_discount')) {
-            return $item->subTotal(false, false, false, true) * $this->value;
-        }
-
-        return $this->value;
-    }
 
     /**
      * Displays the value in a money format.
@@ -88,7 +63,7 @@ class Fixed implements CouponContract
     public function displayValue($locale = null, $currencyCode = null, $format = true)
     {
         return LaraCart::formatMoney(
-            $this->discount(),
+            $this->value,
             $locale,
             $currencyCode,
             $format
